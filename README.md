@@ -18,4 +18,14 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Color
+
+``` bash
+# Blue1 -> #132D4B
+# Blue2 -> #4A71A3
+# Blue3 -> #9DA8CA
+# White1 -> #F9F9FA
+# Gray1 -> #D1D1DC
+# Gray2 -> #B5C1CE
+# Orange1 -> #F05A2F
+```
