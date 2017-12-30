@@ -2,13 +2,15 @@
     <div class="app-index">
         <div class="block text-center">
             <div v-if="!user">
-                <button type="button" class="button" @click="getToken()">
-                    LOGIN WITH BLIZZARD
-                </button>
+                <a href="https://grabkeys.net:3443/bnet/login" @click="loadingActive()">
+                    <button type="button" class="button">
+                        LOGIN WITH BLIZZARD
+                    </button>
+                </a>
             </div>
             <div v-else>
-                
-                User Profile
+                <button type="button" class="button" @click="logout()">Logout</button>
+                <router-link v-if="user.profile.permission >= 2" :to="{ name: 'backend'}"><button class="button">Backend</button></router-link>
             </div>
         </div>
         <div class="block">
@@ -18,18 +20,27 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
     name: 'index',
     data() {
         return {
-            user: null,
         }
     },
     created() {
+
+    },
+    computed: {
+        ...mapState(['user', 'token'])
     },
     methods: {
-        ...mapActions(['getToken']),
+        ...mapMutations(['clearProfile', 'loadingActive']),
+        logout () {
+            window.history.replaceState(null, null, window.location.pathname);
+            this.loadingActive();
+            setTimeout(this.loadingActive, 500);
+            setTimeout(this.clearProfile(), 1000);
+        }
     }
 }
 </script>
