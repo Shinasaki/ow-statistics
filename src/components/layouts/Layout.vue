@@ -2,7 +2,6 @@
     <div class="row m-0">
         <div class="app-layout col-11 col-md-10 col-lg-9 mx-auto">
             <transition name="loading-fade">
-                {{ token }}
                 <div v-if="(token && !user) || loading" class="loading">
                     <div class="loader block-center">
                         <div id="largeBox"></div>
@@ -29,13 +28,18 @@ export default {
         }
     },
     created() {
-        // เจอ token
-        if (getUrlVars()["token"]) {
+        if (getUrlVars()["token"]) { // เจอ token
+            this.updateProfile(getUrlVars()["token"])
+            this.updateUserRank(getUrlVars()["token"]);
             this.updateToken(getUrlVars()["token"])
-        } 
-        if (localStorage.token !== 'undefined' && localStorage.token !== undefined) {
-            this.updateToken(localStorage.token)
-            this.updateProfile(localStorage.token)
+            
+        } else {
+            if (localStorage.token !== 'undefined' && localStorage.token !== undefined) {
+                console.log(localStorage.token)
+                this.updateProfile(localStorage.token);
+                this.updateUserRank(localStorage.token);
+                this.updateToken(localStorage.token);
+            }
         }
     },
     updated() {
@@ -46,7 +50,7 @@ export default {
         ...mapState(['user', 'token', 'loading'])
     },
     methods: {
-        ...mapMutations(['updateProfile', 'clearProfile', 'updateToken']),
+        ...mapMutations(['updateProfile', 'clearProfile', 'updateToken', 'updateUserRank']),
     }
 }
 
@@ -112,7 +116,7 @@ body, html {
 /* Block */
 .block {
     background: #3E5198;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     box-shadow: 0 1px 2px #1E1E3f;
     margin-bottom: 10px;
@@ -125,9 +129,17 @@ body, html {
         border: 5px #4A71A3;
         border-style: none none none solid;
     }
-    .block-sub {
+    .block-title-sub {
         color: #D1D1DC;
     }
+
+.block-sub {
+    background: #9DA8CA;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #1E1E3f;
+    margin-bottom: 10px;
+}
 
 /* Button */
 .button {
@@ -135,7 +147,7 @@ body, html {
     padding: 10px 20px;
     background: none;
     border: 2px solid #F9F9FA;
-    border-radius: 5px;
+    border-radius: 30px;
     box-shadow: 0 2px 3px #1E1E3f;
     text-shadow: 0 3px 4px #1E1E3f;
     margin: 10px;

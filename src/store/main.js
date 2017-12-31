@@ -40,7 +40,7 @@ const mutations = {
                 this.state.token = null
                 localStorage.removeItem('token')
             } else if (response.body && response.status == 200) {
-                this.state.token = response.body.blizzard.token;
+                this.state.token = response.body.users.blizzard.token;
                 this.state.user = response.body;
             }
             window.history.replaceState(null, null, window.location.pathname);
@@ -48,12 +48,24 @@ const mutations = {
             this.state.user = null
             localStorage.removeItem('token')
             this.state.token = localStorage.token
-            swal({
-                title: 'Token does not match',
-                html: 'กรุณาเข้าสู่ระบบใหม่อีกรอบ.',
-                type: 'error'
-            })
+            if (error.body == 'token does not match.') {
+                swal({
+                    title: 'Token does not match',
+                    html: 'กรุณาเข้าสู่ระบบใหม่.',
+                    type: 'error'
+                })
+            } else {
+                swal({
+                    title: 'Error',
+                    html: 'เกิดข้อผิดพลาดกรุณาลองใหม่ทีหลัง.',
+                    type: 'error'
+                })
+            }
+
         })
+    },
+    updateUserRank (state, token) {
+        Vue.http.get('https://grabkeys.net:3443/bnet/userRank');
     }
 }
 

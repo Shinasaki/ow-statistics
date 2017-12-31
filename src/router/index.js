@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
     if (localStorage.token == 'undefined' || localStorage.token == undefined) { next({ name: 'index' }) } else {
       Vue.http.post('https://grabkeys.net:3443/bnet/get', JSON.stringify({ token: localStorage.token })).then( response => {
         if (response.body && response.status == 200) {
-          let permission = response.body.profile.permission;
+          let permission = response.body.profile.blizzard.permission;
           if (permission >= 2) next(); else next({ name: 'index' }) 
         }
       })
