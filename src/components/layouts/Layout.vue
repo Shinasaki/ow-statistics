@@ -30,14 +30,14 @@ export default {
     created() {
         if (getUrlVars()["token"]) { // เจอ token
             this.updateProfile(getUrlVars()["token"])
-            this.updateUserRank(getUrlVars()["token"]);
+            // this.updateUserRank(getUrlVars()["token"]);
             this.updateToken(getUrlVars()["token"])
             
         } else {
             if (localStorage.token !== 'undefined' && localStorage.token !== undefined) {
                 console.log(localStorage.token)
                 this.updateProfile(localStorage.token);
-                this.updateUserRank(localStorage.token);
+                // this.updateUserRank(localStorage.token);
                 this.updateToken(localStorage.token);
             }
         }
@@ -110,7 +110,7 @@ function getUrlVars() {
 body, html {
     height: 100%;
     min-height: 100%;
-    background: #2F2F5A;
+    background-color: #2F2F5A !important;
 }
 
 /* Block */

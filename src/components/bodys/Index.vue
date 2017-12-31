@@ -10,31 +10,29 @@
                 </a>
             </div>
             <div class="row p-0 m-0 " v-else>
-                <div class="col-12 col-md-3 block-portrait">
+                <div class="col-12 col-lg-3 block-portrait">
                     <div class="row">
                         <div class="col-3 text-left"><img v-bind:src="user.users.overwatch.portrait"></div>
-                        <div class="col-9 text-left"><p><b>{{ user.users.blizzard.tag }} </b></p></div>
+                        <div class="col-9 text-left p-0"><p><b>{{ user.users.blizzard.tag }} </b></p></div>
                     </div>
                 </div>
-                <div v-if="user.users.overwatch.competitive.rank" class="col-12 col-md-3 block-rank text-left">
+                <div v-if="user.users.overwatch.competitive.rank" class="col-12 col-lg-3 block-rank text-left">
                     <div class="row">
-                        <div class="col-3 text-left pl-4"><img v-bind:src="user.users.overwatch.competitive.rank_img"></div>
-                        <div class="col-9 text-left" ><p ><b>{{ user.users.overwatch.competitive.rank }} SR</b></p></div>
+                        <div class="col-3 text-left p-0 pl-4"><img v-bind:src="user.users.overwatch.competitive.rank_img"></div>
+                        <div class="col-9 text-left p-0"><p ><b>{{ user.users.overwatch.competitive.rank }} SR</b></p></div>
                     </div>
-                    
-                    
                 </div>
-                <div v-else class="col-12 col-md-3 block-rank">
+                <div v-else class="col-12 col-lg-3 block-rank">
                     <div class="row">
-                        <div class="col-3 text-left"><img src="../../assets/img/unrank.png"></div>
-                        <div class="col-9 text-left"><p><b>Jeff said 'unrank'. </b></p></div>
+                        <div class="col-3 text-left pl-0 pl-4"><img src="../../assets/img/unrank.png"></div>
+                        <div class="col-9 text-left pl-0"><p><b>Jeff said 'unrank'. </b></p></div>
                     </div>
                 </div>
 
-                <div class="col block-menu" v-if="user.profile.blizzard.permission >= 2">
+                <div class="col-12 col-lg block-menu" v-if="user.profile.blizzard.permission >= 2">
                     <router-link :to="{ name: 'backend'}"><button class="button">Backend</button></router-link>
                 </div>
-                <div class="col block-menu">
+                <div class="col-12 col-lg block-menu p-0">
                     <button type="button" class="button" @click="logout()">Logout</button>
                 </div>
             </div>
@@ -43,7 +41,7 @@
             <div class="block-title">
                 Overwatch Thailand Rank Statistics
                 <div class="block-title-sub" style="font-size: 15px">Dataset: <b>{{ all }}</b></div>
-                <div class="block-title-sub" v-if="user" style="font-size: 15px">Your Rank: <b>{{ user.users.blizzard.userRank }}</b></div>
+                <div class="block-title-sub" v-if="user" style="font-size: 15px">Your Rank: <b>{{ user.profile.blizzard.userRank }}</b></div>
             </div>
             <hr>
             <div class="p-4"><canvas ref="canvas" width="900"></canvas></div>
@@ -120,7 +118,6 @@ export default {
 
 <style>
 .block-portrait, .block-rank, .block-menu {
-    
     background: #2F2F5A;
     padding: 0;
     margin: 5px;
@@ -132,7 +129,7 @@ export default {
     }
     .block-portrait p, .block-rank p {
         display: inline-block;
-        max-width: 80%;
+        max-width: 70%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap; 
@@ -154,5 +151,25 @@ export default {
     margin: 0;
     border-radius: 30px;
     width: 100%;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .block-portrait p, .block-rank p {
+        left: 25%;
+        max-width: 60%;
+    }
+}
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+    .block-portrait p, .block-rank p {
+        left: 25%;
+        max-width: 60%;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .block-portrait p, .block-rank p {
+        padding-left: 30px;
+    }
 }
 </style>
