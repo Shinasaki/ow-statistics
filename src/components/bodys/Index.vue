@@ -1,7 +1,6 @@
 <template>
-    <div class="app-index">
+    <div class="app-index mb-4">
         <div class="block text-center">
-            
             <div v-if="!user">
                 <a href="https://grabkeys.net:3443/bnet/login" @click="loadingActive()">
                     <button type="button" class="button">
@@ -9,27 +8,27 @@
                     </button>
                 </a>
             </div>
-            <div class="row p-0 m-0 " v-else>
+            <div class="row p-0 m-0" v-else>
                 <div class="col-12 col-lg-3 block-portrait">
-                    <div class="row">
-                        <div class="col-3 text-left"><img v-bind:src="user.users.overwatch.portrait"></div>
-                        <div class="col-9 text-left p-0"><p><b>{{ user.users.blizzard.tag }} </b></p></div>
+                    <div class="row p-0">
+                        <div class="col-3 text-left"><img v-bind:src="user.overwatch.portrait"></div>
+                        <div class="col-9 text-left"><p><b>{{ user.blizzard.tag }} </b></p></div>
                     </div>
                 </div>
-                <div v-if="user.users.overwatch.competitive.rank" class="col-12 col-lg-3 block-rank text-left">
-                    <div class="row">
-                        <div class="col-3 text-left p-0 pl-4"><img v-bind:src="user.users.overwatch.competitive.rank_img"></div>
-                        <div class="col-9 text-left p-0"><p ><b>{{ user.users.overwatch.competitive.rank }} SR</b></p></div>
+                <div v-if="user.overwatch.competitive.rank" class="col-12 col-lg-3 block-rank text-left">
+                    <div class="row p-0">
+                        <div class="col-3 text-left"><img v-bind:src="user.overwatch.competitive.rank_img"></div>
+                        <div class="col-9 text-left"><p ><b>{{ user.overwatch.competitive.rank }} SR</b></p></div>
                     </div>
                 </div>
                 <div v-else class="col-12 col-lg-3 block-rank">
-                    <div class="row">
-                        <div class="col-3 text-left pl-0 pl-4"><img src="../../assets/img/unrank.png"></div>
-                        <div class="col-9 text-left pl-0"><p><b>Jeff said 'unrank'. </b></p></div>
+                    <div class="row p-0">
+                        <div class="col-3 text-left"><img src="../../assets/img/unrank.png"></div>
+                        <div class="col-9 text-left"><p><b>Jeff said 'unrank'. </b></p></div>
                     </div>
                 </div>
 
-                <div class="col-12 col-lg block-menu" v-if="user.profile.blizzard.permission >= 2">
+                <div class="col-12 col-lg block-menu p-0" v-if="user.profile.permission >= 2">
                     <router-link :to="{ name: 'backend'}"><button class="button">Backend</button></router-link>
                 </div>
                 <div class="col-12 col-lg block-menu p-0">
@@ -41,10 +40,24 @@
             <div class="block-title">
                 Overwatch Thailand Rank Statistics
                 <div class="block-title-sub" style="font-size: 15px">Dataset: <b>{{ all }}</b></div>
-                <div class="block-title-sub" v-if="user" style="font-size: 15px">Your Rank: <b>{{ user.profile.blizzard.userRank }}</b></div>
+                <div class="block-title-sub" v-if="user" style="font-size: 15px">Your Rank: <b>{{ user.profile.userRank }}</b></div>
             </div>
             <hr>
             <div class="p-4"><canvas ref="canvas" width="900"></canvas></div>
+        </div>
+        <div class="block">
+            <div class="block-title">
+                Top 100
+            </div>
+            <table class="table table-responsive block-table">
+                <tr v-for="item in top" class="row m-0">
+                    <td class="col-2"><img v-bind:src="item.portrait" style="height: 50px; border-radius: 50%;"></td>
+                    <td class="col">{{ item.tag }}</td>
+                    <td class="col">{{ item.rank }} SR</td>
+                    <td class="col mobile">{{ item.time }}</td>
+                    <td class="col-1 mobile">#{{ item.top }}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>
@@ -64,7 +77,7 @@ export default {
     created() {
     },
     computed: {
-        ...mapState(['user', 'token', 'rank'])
+        ...mapState(['user', 'token', 'rank', 'top'])
     },
     methods: {
         ...mapMutations(['clearProfile', 'loadingActive', 'updateRank']),
@@ -117,6 +130,16 @@ export default {
 </script>
 
 <style>
+.block-table {margin-top: 15px; border-spacing: 0px; border-collapse: separate; border: none !important;}
+.block-table td:not(:first-child) { padding: 25px; }
+.block-table tr { border-radius: 10px }
+.block-table tr:first-child td:first-child { border-top-left-radius: 10px;}
+.block-table tr:first-child td:last-child { border-top-right-radius: 10px;}
+.block-table tr:last-child td:first-child { border-bottom-left-radius: 10px;}
+.block-table tr:last-child td:last-child { border-bottom-right-radius: 10px;}
+.block-table tr:nth-child(even) { background: #9DA8CA}
+.block-table tr:nth-child(odd) { background: #2f2f5a}
+
 .block-portrait, .block-rank, .block-menu {
     background: #2F2F5A;
     padding: 0;
@@ -156,6 +179,9 @@ export default {
 
 
 @media screen and (max-width: 768px) {
+    .mobile {
+        display: none;
+    }
     .block-portrait p, .block-rank p {
         left: 25%;
         max-width: 60%;

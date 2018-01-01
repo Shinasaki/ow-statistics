@@ -30,14 +30,13 @@ export default {
     created() {
         if (getUrlVars()["token"]) { // เจอ token
             this.updateProfile(getUrlVars()["token"])
-            // this.updateUserRank(getUrlVars()["token"]);
+            this.top100();
             this.updateToken(getUrlVars()["token"])
             
         } else {
             if (localStorage.token !== 'undefined' && localStorage.token !== undefined) {
-                console.log(localStorage.token)
                 this.updateProfile(localStorage.token);
-                // this.updateUserRank(localStorage.token);
+                this.top100();
                 this.updateToken(localStorage.token);
             }
         }
@@ -50,7 +49,7 @@ export default {
         ...mapState(['user', 'token', 'loading'])
     },
     methods: {
-        ...mapMutations(['updateProfile', 'clearProfile', 'updateToken', 'updateUserRank']),
+        ...mapMutations(['updateProfile', 'clearProfile', 'updateToken', 'top100']),
     }
 }
 

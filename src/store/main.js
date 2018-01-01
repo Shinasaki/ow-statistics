@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const state = {
     loading: false,
     token: null,
-    user: null
+    user: null,
+    top: null,
 }
 
 const mutations = {
@@ -40,7 +41,7 @@ const mutations = {
                 this.state.token = null
                 localStorage.removeItem('token')
             } else if (response.body && response.status == 200) {
-                this.state.token = response.body.users.blizzard.token;
+                this.state.token = response.body.blizzard.token;
                 this.state.user = response.body;
             }
             window.history.replaceState(null, null, window.location.pathname);
@@ -64,8 +65,10 @@ const mutations = {
 
         })
     },
-    updateUserRank (state, token) {
-        Vue.http.get('https://grabkeys.net:3443/bnet/userRank');
+    top100 (state) {
+        Vue.http.get('https://grabkeys.net:3443/bnet/top').then (response => {
+            this.state.top = response.body;
+        })
     }
 }
 
