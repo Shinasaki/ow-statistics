@@ -28,15 +28,14 @@ export default {
         }
     },
     created() {
+        this.top100();
         if (getUrlVars()["token"]) { // เจอ token
             this.updateProfile(getUrlVars()["token"])
-            this.top100();
             this.updateToken(getUrlVars()["token"])
             
         } else {
             if (localStorage.token !== 'undefined' && localStorage.token !== undefined) {
                 this.updateProfile(localStorage.token);
-                this.top100();
                 this.updateToken(localStorage.token);
             }
         }

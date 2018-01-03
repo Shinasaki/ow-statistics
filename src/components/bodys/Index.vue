@@ -11,20 +11,20 @@
             <div class="row p-0 m-0" v-else>
                 <div class="col-12 col-lg-3 block-portrait">
                     <div class="row p-0">
-                        <div class="col-3 text-left"><img v-bind:src="user.overwatch.portrait"></div>
-                        <div class="col-9 text-left"><p><b>{{ user.blizzard.tag }} </b></p></div>
+                        <div class="col-3 text-left pl-0 pr-0"><img v-bind:src="user.overwatch.portrait"></div>
+                        <div class="col-9 text-left pl-0 pr-0"><p><b>{{ user.blizzard.tag }} </b></p></div>
                     </div>
                 </div>
                 <div v-if="user.overwatch.competitive.rank" class="col-12 col-lg-3 block-rank text-left">
                     <div class="row p-0">
-                        <div class="col-3 text-left"><img v-bind:src="user.overwatch.competitive.rank_img"></div>
-                        <div class="col-9 text-left"><p ><b>{{ user.overwatch.competitive.rank }} SR</b></p></div>
+                        <div class="col-3 text-left pl-0 pr-0"><img v-bind:src="user.overwatch.competitive.rank_img"></div>
+                        <div class="col-9 text-left pl-0 pr-0"><p ><b>{{ user.overwatch.competitive.rank }} SR</b></p></div>
                     </div>
                 </div>
                 <div v-else class="col-12 col-lg-3 block-rank">
                     <div class="row p-0">
-                        <div class="col-3 text-left"><img src="../../assets/img/unrank.png"></div>
-                        <div class="col-9 text-left"><p><b>Jeff said 'unrank'. </b></p></div>
+                        <div class="col-3 text-left pl-0 pr-0"><img src="../../assets/img/unrank.png"></div>
+                        <div class="col-9 text-left pl-0 pr-0"><p><b>Jeff said 'unrank'. </b></p></div>
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
             <table class="table table-responsive block-table">
                 <tr v-for="item in top" class="row m-0">
                     <td class="col-2"><img v-bind:src="item.portrait" style="height: 50px; border-radius: 50%;"></td>
-                    <td class="col">{{ item.tag }}</td>
+                    <td class="col limit">{{ item.tag }}</td>
                     <td class="col">{{ item.rank }} SR</td>
                     <td class="col mobile">{{ item.time }}</td>
                     <td class="col-1 mobile">#{{ item.top }}</td>
@@ -130,14 +130,13 @@ export default {
 </script>
 
 <style>
-.block-table {margin-top: 15px; border-spacing: 0px; border-collapse: separate; border: none !important;}
+.block-table {margin-top: 15px; border-radius: 10px; border-color: none; }
 .block-table td:not(:first-child) { padding: 25px; }
-.block-table tr { border-radius: 10px }
 .block-table tr:first-child td:first-child { border-top-left-radius: 10px;}
 .block-table tr:first-child td:last-child { border-top-right-radius: 10px;}
 .block-table tr:last-child td:first-child { border-bottom-left-radius: 10px;}
 .block-table tr:last-child td:last-child { border-bottom-right-radius: 10px;}
-.block-table tr:nth-child(even) { background: #9DA8CA}
+.block-table tr:nth-child(even) { background: #525291}
 .block-table tr:nth-child(odd) { background: #2f2f5a}
 
 .block-portrait, .block-rank, .block-menu {
@@ -179,8 +178,15 @@ export default {
 
 
 @media screen and (max-width: 768px) {
+    .block-table tr:first-child td:nth-child(3) { border-top-right-radius: 10px;}
+    .block-table tr:last-child td:nth-child(3) { border-bottom-right-radius: 10px;}
     .mobile {
         display: none;
+    }
+    .limit {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .block-portrait p, .block-rank p {
         left: 25%;
